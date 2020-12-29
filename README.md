@@ -23,16 +23,40 @@ As provided, the 'plan_path' function sets the start position as the center of t
 
 #### 1. Set your global home position
 
+The global home position is initially extracted from the first line of the 'collision.csv' file, which contains information 'lat0 37.792480 lon0 -122.397450'. This is accomplished using function csv.reader, as follows :
 
+```
+with open('colliders.csv', newline='') as f:
+            reader = csv.reader(f)
+            first_row = next(reader)  # gets the first line
+        lat0 = float(first_row[0].split()[1])
+        lon0 = float(first_row[1].split()[1])
+```        
+
+The values in lat0 and lon0 are then assigned as the global home position as :
+
+```self.set_home_position(lon0, lat0, 0)```
 
 #### 2. Set your current local position
 
+The drone's current position is obtained using:
+
+```
+        current_north = self.local_position[0]
+        current_east = self.local_position[1]
+```
 
 #### 3. Set grid start position from local position
 
+The grid start position is obtained from variables 'current_north' and 'current_east', by converting these values to integers using the np.rint function and by adjusting north and east grid offset :
+
+```
+        grid_start = (int(-north_offset + np.rint(current_north)),int(-east_offset + np.rint(current_east)))
+```
 
 #### 4. Set grid goal position from geodetic coords
 
+If the goal coordinates are entered as 
 
 #### 5. Modify A* to include diagonal motion (or replace A* altogether)
 
