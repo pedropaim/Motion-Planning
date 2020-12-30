@@ -56,9 +56,53 @@ The grid start position is obtained from variables 'current_north' and 'current_
 
 #### 4. Set grid goal position from geodetic coords
 
-If the goal coordinates are entered as 
+The goal coordinates are entered as latitude and longitude through variables goal_lat, goal_lon. These variables are then converted to local coordinates using function 'global_to_local'. The result is then converted to integers:
+
+```
+            [goal_x, goal_y, goal_z] = global_to_local([goal_lon, goal_lat,TARGET_ALTITUDE],self.global_home)
+            goal_x = int(goal_x)
+            goal_y = int(goal_y)
+```
 
 #### 5. Modify A* to include diagonal motion (or replace A* altogether)
+
+Actions to directions 'NORTHWEST', 'NORTHEAST', 'SOUTHWEST'and 'SOUTHEAST' are included in the list of possible actions, using a cost of 1.414 (square-root of two) :
+
+```
+class Action(Enum):
+    """
+    An action is represented by a 3 element tuple.
+
+    The first 2 values are the delta of the action relative
+    to the current grid position. The third and final value
+    is the cost of performing the action.
+    """
+
+    WEST = (0, -1, 1)
+    EAST = (0, 1, 1)
+    NORTH = (-1, 0, 1)
+    SOUTH = (1, 0, 1)
+    NORTHWEST = (-1, -1, 1.414)
+    NORTHEAST = (-1, 1, 1.414)
+    SOUTHWEST = (1, -1, 1.414)
+    SOUTHEAST = (1, 1, 1.414)
+
+```
+
+The 'valid_actions' function is modified to check if actions in a diagonal direction will result off the grid or cause a collision, and remove these actions from the list of valid actions as appropriate :
+
+```
+
+    if x - 1 < 0 or y - 1 < 0 or grid[x - 1, y - 1] == 1:
+        valid_actions.remove(Action.NORTHWEST)
+    if x - 1 < 0 or y + 1 > m or grid[x - 1, y + 1] == 1:
+        valid_actions.remove(Action.NORTHEAST)
+    if x + 1 > n or y - 1  < 0 or grid[x + 1, y - 1] == 1:
+        valid_actions.remove(Action.SOUTHWEST)
+    if x + 1 > n or y + 1  < m or grid[x + 1, y + 1] == 1:
+        valid_actions.remove(Action.SOUTHEAST)
+
+``` 
 
 
 #### 6. Cull waypoints
