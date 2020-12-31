@@ -58,7 +58,9 @@ The grid start position is obtained from variables 'current_north' and 'current_
 
 The program allows the goal position to be entered in four different ways, which are selectable by the user :
 
+![alt text][figure]
 
+[figure]: https://github.com "Goal Selection Menu"
 
 The goal coordinates are entered as latitude and longitude through variables goal_lat, goal_lon. These variables are then converted to local coordinates using function 'global_to_local'. The result is then converted to integers:
 
@@ -84,12 +86,12 @@ class Action(Enum):
 
     WEST = (0, -1, 1)
     EAST = (0, 1, 1)
-    NORTH = (-1, 0, 1)
-    SOUTH = (1, 0, 1)
-    NORTHWEST = (-1, -1, 1.414)
-    NORTHEAST = (-1, 1, 1.414)
-    SOUTHWEST = (1, -1, 1.414)
-    SOUTHEAST = (1, 1, 1.414)
+    SOUTH = (-1, 0, 1)
+    NORTH = (1, 0, 1)
+    SOUTHWEST = (-1, -1, 1.414)
+    SOUTHEAST = (-1, 1, 1.414)
+    NORTHWEST = (1, -1, 1.414)
+    NORTHEAST = (1, 1, 1.414)
 
 ```
 
@@ -98,13 +100,13 @@ The 'valid_actions' function is modified to check if actions in a diagonal direc
 ```
 
     if x - 1 < 0 or y - 1 < 0 or grid[x - 1, y - 1] == 1:
-        valid_actions.remove(Action.NORTHWEST)
-    if x - 1 < 0 or y + 1 > m or grid[x - 1, y + 1] == 1:
-        valid_actions.remove(Action.NORTHEAST)
-    if x + 1 > n or y - 1  < 0 or grid[x + 1, y - 1] == 1:
         valid_actions.remove(Action.SOUTHWEST)
-    if x + 1 > n or y + 1  < m or grid[x + 1, y + 1] == 1:
+    if x - 1 < 0 or y + 1 > m or grid[x - 1, y + 1] == 1:
         valid_actions.remove(Action.SOUTHEAST)
+    if x + 1 > n or y - 1  < 0 or grid[x + 1, y - 1] == 1:
+        valid_actions.remove(Action.NORTHWEST)
+    if x + 1 > n or y + 1  < m or grid[x + 1, y + 1] == 1:
+        valid_actions.remove(Action.NORTHEAST)
 
 ``` 
 
