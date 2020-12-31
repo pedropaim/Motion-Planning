@@ -60,7 +60,7 @@ The program allows the goal position to be entered in four different ways, which
 
 ![alt text][figure]
 
-[figure]: https://github.com "Goal Selection Menu"
+[figure]: https://github.com/pedropaim/Motion-Planning/blob/main/Figure_01.png "Goal Selection Menu"
 
 The goal coordinates are entered as latitude and longitude through variables goal_lat, goal_lon. These variables are then converted to local coordinates using function 'global_to_local'. The result is then converted to integers:
 
