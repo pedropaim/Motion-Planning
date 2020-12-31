@@ -56,6 +56,10 @@ The grid start position is obtained from variables 'current_north' and 'current_
 
 #### 4. Set grid goal position from geodetic coords
 
+The program allows the goal position to be entered in four different ways, which are selectable by the user :
+
+
+
 The goal coordinates are entered as latitude and longitude through variables goal_lat, goal_lon. These variables are then converted to local coordinates using function 'global_to_local'. The result is then converted to integers:
 
 ```
