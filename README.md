@@ -107,6 +107,52 @@ The 'valid_actions' function is modified to check if actions in a diagonal direc
 
 #### 6. Cull waypoints
 
+After the computation of the trajectory using the A* algorithm, the path is pruned to remove unnecessary waypoints by conducting a collinearity check. Function 'prune_path' cycles through all the waypoints of the path and checks for collinearity. If a given set of waypoints is collinear (within a specified tolerance epsilon), then the center waypoint is removed from the path and the function moves on to check collinearity using the subsequent waypoint. The 'prune_path' function is transcribed below: 
+
+```
+def prune_path(path):
+    if path != None and (len(path) >= 3):
+        if len(path) >= 3:
+            p_a = path[0]
+            p_b = path[1]
+            p_c = path[2]
+            pruned_path = []
+            pruned_path.append(p_a)
+            for i in range(len(path)-3) :
+                if collinearity_check(p_a,p_b,p_c):
+                    p_b = p_c
+                    p_c = path[i+3]
+                else :
+                    pruned_path.append(p_b)
+                    p_a = p_b
+                    p_b = p_c
+                    p_c = path[i+3]
+            pruned_path.append(p_c)
+    else :
+        pruned_path = path
+    return pruned_path
+```
+
+
+The 'prune_path' function calls a supporting function 'collinearity_check', which receives a set of three 2D points and checks if they are collinear based on the idea that if the points are collinear, then the determinant of a 3x3 matrix composed of the three points (and 1 on the last column) will be equal to zero. It also adopts a tolerance 'epsilon' for the computation of the determinant in the collinearity check. The function is transcribed below:
+
+```
+
+def collinearity_check(p1, p2, p3, epsilon = 3):
+    collinear = False
+    x_1 = p1[0]
+    y_1 = p1[1]
+    x_2 = p2[0]
+    y_2 = p2[1]
+    x_3 = p3[0]
+    y_3 = p3[1]
+    det = x_1*(y_2 - y_3) + x_2*(y_3 - y_1) + x_3*(y_1 - y_2)
+    if abs(det) < epsilon:
+        collinear = True
+    return collinear
+
+```
+
 
 ### Execute the flight
 
