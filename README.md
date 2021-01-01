@@ -9,9 +9,9 @@ Udacity - Autonomous Flight Nanodegree Program - Motion Planning Project
 
 ##### a. The 'motion_planning.py' file
 
-The 'motion_planning.py' file contains the declaration of a class MotionPlanning, which inherits from a 'Drone' class. The main program creates an instance of the MotionPlanning class, called 'drone', and launches class method 'start', which initiates the connection with the drone. The MotionPlanning class also contains methods describing what the drone should do whenever 'Local Position', 'Velocity' or 'State' messages. These methods cause the drone to initially ARM, then TAKEOFF to a selected height, then plan a path using the 'plan_path' function, send the waypoints to the simulator, fly towards each waypoint in sequence, then land and disarm the drone.
+The 'motion_planning.py' file contains the declaration of a class MotionPlanning, which inherits from a 'Drone' class. The main program creates an instance of the MotionPlanning class, called 'drone', and launches class method 'start', which initiates the connection with the drone. The MotionPlanning class also contains methods describing what the drone should do whenever 'Local Position', 'Velocity' or 'State' messages are received. These methods cause the drone to initially ARM, then TAKEOFF to a selected height, then plan a path using the 'plan_path' function, send the waypoints to the simulator, fly towards each waypoint in sequence, then land and disarm the drone.
 
-As provided, the 'plan_path' function sets the start position as the center of the map and the goal position as a point located 10 m north and 10 m east of the center. This causes the drone to move to takeoff, move towards the center of the map, then follow a set of waypoints along a zig-zag trajectory towards the goal position. The zig-zag trajectory comes from the fact that the A* planning algorithm provided only adopts motions in the North, East, South and West directions as valid actions, and that it uses a 1m x 1m grid for planning, without any path pruning.
+As provided, the 'plan_path' function sets the start position as the center of the map and the goal position as a point located 10 m north and 10 m east of the center. This causes the drone to takeoff, move towards the center of the map, then follow a set of waypoints along a zig-zag trajectory towards the goal position. The zig-zag trajectory comes from the fact that the A* planning algorithm provided only adopts motions in the North, East, South and West directions as valid actions, and that it uses a 1m x 1m grid for planning, without any path pruning.
 
 ##### b. The 'planning_utils.py' file
 
@@ -63,9 +63,9 @@ The program allows the goal position to be entered in four different ways, which
 
 [figure]: https://github.com/pedropaim/Motion-Planning/blob/main/Figure_01.png "Goal Selection Menu"
 
-* Option '0' will set the goal as the home coordinate, at the center of the map.
+* Option '0' will set the goal as the home coordinates, at the center of the map.
 * Option '1' will set the goal as in the original 'motion_planning.py' file, as 10 m North and 10 m East of the center of the map.
-* Options '2' will set the goal as a pre-defined position at Lat 37.795663 Lon -122.40105.
+* Option '2' will set the goal as a pre-defined position at Lat 37.795663 Lon -122.40105.
 * Option '3' will set the goal as latitude and longitude values input by the user, while also checking the validity of the user input (within the map's limits and not colliding with any obstacle). This is accomplished through function 'user_input_goal', which is contained in file 'supporting_functions.py'. The function initially prompts the user to input latitude and longitude values, while also presenting the map's latitude and longitude limits.  
 * Option '4' will set the goal as a random coordinate inside the map. This is accomplished through function 'random_goal', which is contained in file 'supporting_functions.py'. The function generates two random numbers for local x and y coordinates within the map limits, then checks for collision with any obstacles. If there is a collision, then a new pair of random x and y coordinates is generated.
 
