@@ -170,7 +170,7 @@ After path planning and removing unnecessary waypoints, the program calls functi
 
 ```
 def drone_heading(waypoints):
-    for i in range(1,len(waypoints)-1):
+    for i in range(1,len(waypoints)):
         north_2 = waypoints[i][0]
         north_1 = waypoints[i-1][0]
         east_2 = waypoints[i][1]
