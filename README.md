@@ -164,11 +164,24 @@ def collinearity_check(p1, p2, p3, epsilon = 3):
     return collinear
 
 ```
+#### 7. Adjusting Drone Heading
+
+After path planning and removing unnecessary waypoints, the program calls function 'drone_heading' (declared in file supporting_functions.py), which adjusts the heading of the drone on each leg of the path, so that the drone's heading will always be towards the next waypoint:
+
+```
+def drone_heading(waypoints):
+    for i in range(1,len(waypoints)-1):
+        north_2 = waypoints[i][0]
+        north_1 = waypoints[i-1][0]
+        east_2 = waypoints[i][1]
+        east_1 = waypoints[i-1][1]
+        heading = np.arctan2(east_2 - east_1, north_2 - north_1)
+        waypoints[i][3] = heading
+    return waypoints
+```
 
 
-### Execute the flight
-
-#### 1. Does it work?
+### Executing the flight
 
 The figure below presents the trajectory followed by the drone from the original starting point (map center) to the original goal position (10 m North and 10 m East of map center) after modifying the 'valid_actions' function to include diagonal motions and after implementing a collinearity check for path pruning. The path, which had been previously a zig-zagging path with only North and East motions with one waypoint at every grid point, became a direct path from start waypoint to the goal position with one single waypoint.
 
@@ -181,13 +194,3 @@ The figure below presents a more complex trajectory followed by the drone, when 
 ![alt text][figure_03]
 
 [figure_03]: https://github.com/pedropaim/Motion-Planning/blob/main/Figure_03.png "Several waypoint path"
-
-
-
-# Extra Challenges: Real World Planning
-
-## 1. Drone Heading
-
-
-
-## 2. 
