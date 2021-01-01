@@ -164,6 +164,7 @@ def collinearity_check(p1, p2, p3, epsilon = 3):
 
 ```
 
+
 ### Execute the flight
 
 #### 1. Does it work?
