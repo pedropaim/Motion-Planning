@@ -116,7 +116,6 @@ The 'valid_actions' function is modified to check if actions in a diagonal direc
 
 ``` 
 
-
 #### 6. Cull waypoints
 
 After the computation of the trajectory using the A* algorithm, the path is pruned to remove unnecessary waypoints by conducting a collinearity check. Function 'prune_path' cycles through all the waypoints of the path and checks for collinearity. If a given set of waypoints is collinear (within a specified tolerance epsilon), then the center waypoint is removed from the path and the function moves on to check collinearity using the subsequent waypoint. The 'prune_path' function is transcribed below: 
@@ -165,10 +164,15 @@ def collinearity_check(p1, p2, p3, epsilon = 3):
 
 ```
 
-
 ### Execute the flight
 
 #### 1. Does it work?
+
+The figure below presents the trajectory followed by the drone from the original starting point (map center) to the original goal position (10 m North and 10 m East of map center) after modifying the 'valid_actions' function to include diagonal motions and after implementing a collinearity check for path pruning. The path, which had been previously a zig-zagging path with only North and East motions with one waypoint at every grid point, became a direct path from start waypoint to the goal position with one single waypoint.
+
+![alt text][figure_02]
+
+[figure_02]: https://github.com/pedropaim/Motion-Planning/blob/main/Figure_02.png "Single waypoint path"
 
 # Extra Challenges: Real World Planning
 
