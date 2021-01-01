@@ -62,7 +62,12 @@ The program allows the goal position to be entered in four different ways, which
 
 [figure]: https://github.com/pedropaim/Motion-Planning/blob/main/Figure_01.png "Goal Selection Menu"
 
-The goal coordinates are entered as latitude and longitude through variables goal_lat, goal_lon. These variables are then converted to local coordinates using function 'global_to_local'. The result is then converted to integers:
+* Option '0' will set the goal as in the original 'motion_planning.py' file, as 10 m North and 10 m East of the center of the map.
+* Options '1' and '2' will set the goal as two pre-defined coordinates.
+* Option '3' will set the goal as a random coordinate inside the map. This is accomplished through function 'random_goal', which is contained in file 'supporting_functions.py'. The function generates two random numbers for local x and y coordinates within the map limits, then checks for collision with any obstacles. If there is a collision, then a new pair of random x and y coordinates is generated.
+* Option '4' will set the goal as latitude and longitude values input by the user, while also checking the validity of the user input (within the map's limits and not colliding with any obstacle). This is accomplished through function 'user_input_goal', which is contained in file 'supporting_functions.py'. The function initially prompts the user to input latitude and longitude values, while also presenting the map's latitude and longitude limits.  
+
+Whenever the goal coordinates are entered as latitude and longitude through variables goal_lat, goal_lon, these variables are then converted to local coordinates using function 'global_to_local'. The result is then converted to integers:
 
 ```
             [goal_x, goal_y, goal_z] = global_to_local([goal_lon, goal_lat,TARGET_ALTITUDE],self.global_home)
